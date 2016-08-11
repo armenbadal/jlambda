@@ -2,9 +2,7 @@ package main;
 
 import interpreter.*;
 
-/**
- * Created by abadalian on 8/11/16.
- */
+/**/
 public class Main {
     public static void main( String[] args )
     {
@@ -13,5 +11,7 @@ public class Main {
         Expression ex2 = new Binary("*", ex1, ex1);
         Expression ex3 = new Binary("*", ex0, ex2);
         Expression ex4 = new Lambda("r", ex3);
+
+        System.out.println(ex4.toString());
     }
 }
