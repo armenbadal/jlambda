@@ -34,4 +34,11 @@ public class Binary implements Expression {
 
         return null;
     }
+
+    @Override
+    public String toString()
+    {
+        return String.format("(%s %s %s)", subexpro.toString(),
+                operation, subexpri.toString());
+    }
 }

@@ -24,4 +24,10 @@ public class Unary implements Expression {
 
         return res;
     }
+
+    @Override
+    public String toString()
+    {
+        return String.format("%s(%s)", operation, subexpr.toString());
+    }
 }

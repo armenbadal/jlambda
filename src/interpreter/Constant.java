@@ -14,4 +14,10 @@ public class Constant implements Expression {
     {
         return this;
     }
+
+    @Override
+    public String toString()
+    {
+        return Double.toString(value);
+    }
 }

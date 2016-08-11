@@ -21,4 +21,12 @@ public class Apply implements Expression {
 
         return null;
     }
+
+    @Override
+    public String toString()
+    {
+        return String.format("apply %s to %s",
+                function.toString(),
+                argument.toString());
+    }
 }

@@ -25,4 +25,13 @@ public class Conditional implements Expression {
         }
         return null;
     }
+
+    @Override
+    public String toString()
+    {
+        return String.format("if %s then %s else %s",
+                condition.toString(),
+                decision.toString(),
+                alternative.toString());
+    }
 }

@@ -2,10 +2,10 @@ package interpreter;
 
 /**/
 public class Lambda implements Expression {
-    private Variable parameter = null;
+    private String parameter = null;
     private Expression body = null;
 
-    public Lambda( Variable s, Expression e )
+    public Lambda( String s, Expression e )
     {
         parameter = s;
         body = e;
@@ -15,5 +15,11 @@ public class Lambda implements Expression {
     public Expression evaluate( Environment env )
     {
         return this;
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.format("lambda %s . %s", parameter, body.toString());
     }
 }

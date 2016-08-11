@@ -14,4 +14,10 @@ public class Variable implements Expression {
     {
         return env.lookup(name);
     }
+
+    @Override
+    public String toString()
+    {
+        return name;
+    }
 }
