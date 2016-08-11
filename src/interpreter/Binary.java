@@ -1,0 +1,37 @@
+package interpreter;
+
+/**/
+public class Binary implements Expression {
+    private String operation = null;
+    private Expression subexpro = null;
+    private Expression subexpri = null;
+
+    public Binary( String op, Expression eo, Expression ei )
+    {
+        operation = op;
+        subexpro = eo;
+        subexpri = ei;
+    }
+
+    @Override
+    public Expression evaluate( Environment env )
+    {
+        Expression reo = subexpro.evaluate(env);
+        Expression rei = subexpri.evaluate(env);
+
+        if( (reo instanceof Constant) && (rei instanceof Constant) ) {
+            double valo = ((Constant)reo).value;
+            double vali = ((Constant)rei).value;
+            if( operation == "+" )
+                return new Constant(valo + vali);
+            if( operation == "-" )
+                return new Constant(valo - vali);
+            if( operation == "*" )
+                return new Constant(valo * vali);
+            if( operation == "/" )
+                return new Constant(valo / vali);
+        }
+
+        return null;
+    }
+}
