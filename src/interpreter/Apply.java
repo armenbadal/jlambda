@@ -21,7 +21,9 @@ public class Apply implements Expression {
             return null;
 
         Lambda func = (Lambda)oper;
-        Environment capt = new Environment(func.captures);
+        Environment capt = new Environment();
+        if( func.captures != null )
+            capt.putAll(func.captures);
         Set<String> vars = func.freeVariables();
         for( String vr : vars )
             capt.bind(vr, env.lookup(vr));

@@ -28,6 +28,9 @@ public class Lambda implements Expression {
         for( String vr : freeVariables() )
             cap.bind(vr, env.lookup(vr));
 
+        if( cap.isEmpty() )
+            return this;
+
         return new Lambda(parameter, body, cap);
     }
 
