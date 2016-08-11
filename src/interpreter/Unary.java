@@ -1,5 +1,7 @@
 package interpreter;
 
+import java.util.Set;
+
 /**/
 public class Unary implements Expression {
     private String operation = null;
@@ -23,6 +25,12 @@ public class Unary implements Expression {
         }
 
         return res;
+    }
+
+    @Override
+    public Set<String> freeVariables()
+    {
+        return subexpr.freeVariables();
     }
 
     @Override

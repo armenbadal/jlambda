@@ -1,5 +1,7 @@
 package interpreter;
 
+import java.util.Set;
+
 /**/
 public class Apply implements Expression {
     public Expression function = null;
@@ -20,6 +22,14 @@ public class Apply implements Expression {
         Expression ev0 = argument.evaluate(env);
 
         return null;
+    }
+
+    @Override
+    public Set<String> freeVariables()
+    {
+        Set<String> vars = function.freeVariables();
+        vars.addAll(argument.freeVariables());
+        return vars;
     }
 
     @Override

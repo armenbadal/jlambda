@@ -12,6 +12,11 @@ public class Main {
         Expression ex3 = new Binary("*", ex0, ex2);
         Expression ex4 = new Lambda("r", ex3);
 
-        System.out.println(ex4.toString());
+        Expression ex5 = new Constant(1);
+
+        Expression ex6 = new Apply(ex4, ex5);
+
+        System.out.println(ex6.toString());
+        // System.out.println(ex6.freeVariables());
     }
 }

@@ -1,5 +1,7 @@
 package interpreter;
 
+import java.util.Set;
+
 /**/
 public class Lambda implements Expression {
     private String parameter = null;
@@ -15,6 +17,14 @@ public class Lambda implements Expression {
     public Expression evaluate( Environment env )
     {
         return this;
+    }
+
+    @Override
+    public Set<String> freeVariables()
+    {
+        Set<String> vars = body.freeVariables();
+        vars.remove(parameter);
+        return vars;
     }
 
     @Override

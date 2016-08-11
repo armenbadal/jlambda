@@ -1,5 +1,7 @@
 package interpreter;
 
+import java.util.Set;
+
 /**/
 public class Conditional implements Expression {
     public Expression condition = null;
@@ -24,6 +26,15 @@ public class Conditional implements Expression {
             return alternative.evaluate(env);
         }
         return null;
+    }
+
+    @Override
+    public Set<String> freeVariables()
+    {
+        Set<String> vars = condition.freeVariables();
+        vars.addAll(decision.freeVariables());
+        vars.addAll(alternative.freeVariables());
+        return vars;
     }
 
     @Override

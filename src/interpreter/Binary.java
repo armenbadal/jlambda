@@ -1,5 +1,7 @@
 package interpreter;
 
+import java.util.Set;
+
 /**/
 public class Binary implements Expression {
     private String operation = null;
@@ -33,6 +35,14 @@ public class Binary implements Expression {
         }
 
         return null;
+    }
+
+    @Override
+    public Set<String> freeVariables()
+    {
+        Set<String> vars = subexpro.freeVariables();
+        vars.addAll(subexpri.freeVariables());
+        return vars;
     }
 
     @Override
