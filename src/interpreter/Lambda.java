@@ -1,22 +1,34 @@
 package interpreter;
 
 import java.util.Set;
+import java.util.StringJoiner;
 
 /**/
 public class Lambda implements Expression {
-    private String parameter = null;
-    private Expression body = null;
+    public String parameter = null;
+    public Expression body = null;
+    public Environment captures = null;
 
-    public Lambda( String s, Expression e )
+    public Lambda( String p, Expression b )
     {
-        parameter = s;
-        body = e;
+        this(p, b, null);
+    }
+
+    public Lambda( String p, Expression b, Environment c )
+    {
+        parameter = p;
+        body = b;
+        captures = c;
     }
 
     @Override
     public Expression evaluate( Environment env )
     {
-        return this;
+        Environment cap = new Environment();
+        for( String vr : freeVariables() )
+            cap.bind(vr, env.lookup(vr));
+
+        return new Lambda(parameter, body, cap);
     }
 
     @Override
@@ -24,12 +36,21 @@ public class Lambda implements Expression {
     {
         Set<String> vars = body.freeVariables();
         vars.remove(parameter);
+        if( captures != null )
+            vars.removeAll(captures.names());
         return vars;
     }
 
     @Override
     public String toString()
     {
-        return String.format("lambda %s . %s", parameter, body.toString());
+        if( captures == null )
+            return String.format("lambda %s . %s",
+                    parameter, body);
+
+        return String.format("(lambda %s . %s){%s}",
+                parameter,
+                body.toString(),
+                captures.toString());
     }
 }

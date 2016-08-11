@@ -16,12 +16,20 @@ public class Apply implements Expression {
     @Override
     public Expression evaluate( Environment env )
     {
-        boolean isFunc = function instanceof Lambda;
-        if( !isFunc ) return null;
+        Expression oper = function.evaluate(env);
+        if( !(oper instanceof Lambda) )
+            return null;
+
+        Lambda func = (Lambda)oper;
+        Environment capt = new Environment(func.captures);
+        Set<String> vars = func.freeVariables();
+        for( String vr : vars )
+            capt.bind(vr, env.lookup(vr));
 
         Expression ev0 = argument.evaluate(env);
+        capt.bind(func.parameter, ev0);
 
-        return null;
+        return func.body.evaluate(capt);
     }
 
     @Override
