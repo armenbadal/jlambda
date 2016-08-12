@@ -13,4 +13,5 @@ Expr = Constant
      | 'apply' Expr 'to' Expr
      | '#' Ident '.' Expr
      | '{' Expr '?' Expr ':' Expr '}'
+     | '[' Expr '|' Expr ']'.
 ````
