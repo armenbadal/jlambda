@@ -1,6 +1,6 @@
 package parser;
 
-import interpreter.Expression;
+import interpreter.*;
 
 /**
  * Grammar:
@@ -11,61 +11,94 @@ import interpreter.Expression;
  *      | Oper Expr
  *      | Expr Oper Expr
  *      | 'if' Expr 'then' Expr 'else' Expr
- *      | '{' Expr '?' Expr ':' Expr '}'
  *      | 'lambda' Ident '.' Expr
- *      | '#' Ident '.' Expr
  *      | 'apply' Expr 'to' Expr
+ *
+ *      | '#' Ident '.' Expr
+ *      | '{' Expr '?' Expr ':' Expr '}'
  *      | '[' Expr '|' Expr ']'.
  */
 
 /**/
 public class Parser {
-    private String source = null;
-    private int pos = 0;
+    private Scanner scanner = null;
 
-    private static final int xConst = 260;
-    private static final int xIdent = 261;
-    private static final int xAdd = 262;
-    private static final int xSub = 263;
-    private static final int xMul = 264;
-    private static final int xDiv = 265;
-    private static final int xIf = 266;
-    private static final int xThen = 267;
-    private static final int xElse = 268;
-    private static final int xLambda = 269;
-    private static final int xApplly = 270;
+    private Token lookahead = null;
 
     public Parser( String text )
     {
-        source = text;
+        scanner = new Scanner(text);
+        lookahead = scanner.nextToken();
     }
 
     public Expression parse()
     {
-        return null;
+        return parseExpression();
     }
 
-    private int scan()
+    private Expression parseExpression()
     {
-        char ch = source.charAt(pos++);
-
-        while( Character.isWhitespace(ch) )
-            ch = source.charAt(pos++);
-
-        if( Character.isLetter(ch) ) {
-            while( Character.isLetterOrDigit(ch) ) {
-                ch = source.charAt(pos++);
-            }
-            return xIdent;
+        Expression result = null;
+        if( lookahead == Token.xConstant ) {
+            double value = Double.valueOf(scanner.lexeme);
+            match(Token.xConstant);
+            result = new Constant(value);
+        }
+        else if( lookahead == Token.xIdentifier ) {
+            result = new Variable(scanner.lexeme);
+            match(Token.xIdentifier);
+        }
+        else if( lookahead == Token.xSub ) {
+            match(Token.xSub);
+            Expression ex0 = parseExpression();
+            result = new Unary("-", ex0);
+        }
+        else if( lookahead == Token.xLeftPar ) {
+            match(Token.xLeftPar);
+            result = parseExpression();
+            match(Token.xRightPar);
+        }
+        else if( lookahead == Token.xIf ) {
+            match(Token.xIf);
+            Expression co = parseExpression();
+            match(Token.xThen);
+            Expression de = parseExpression();
+            match(Token.xElse);
+            Expression al = parseExpression();
+            result = new Conditional(co, de, al);
+        }
+        else if( lookahead == Token.xLambda ) {
+            match(Token.xLambda);
+            String par = scanner.lexeme;
+            match(Token.xIdentifier);
+            match(Token.xPeriod);
+            Expression bo = parseExpression();
+            result = new Lambda(par, bo);
+        }
+        else if( lookahead == Token.xApplly ) {
+            match(Token.xApplly);
+            Expression fu = parseExpression();
+            match(Token.xTo);
+            Expression ar = parseExpression();
+            result = new Apply(fu, ar);
         }
 
-        if( Character.isDigit(ch) ) {
-            while( Character.isDigit(ch) ) {
-                ch = source.charAt(pos++);
-            }
-            return xConst;
+        if( lookahead == Token.xAdd ||
+            lookahead == Token.xSub ||
+            lookahead == Token.xMul ||
+            lookahead == Token.xDiv ) {
+            String oper = scanner.lexeme;
+            lookahead = scanner.nextToken();
+            Expression ex0 = parseExpression();
+            result = new Binary(oper, result, ex0);
         }
 
-        return 0;
+        return result;
+    }
+
+    private void match( Token k )
+    {
+        if( lookahead == k )
+            lookahead = scanner.nextToken();
     }
 }

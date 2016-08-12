@@ -1,6 +1,9 @@
 package main;
 
 import interpreter.*;
+import parser.Parser;
+import parser.Scanner;
+import parser.Token;
 
 /**/
 public class Main {
@@ -66,10 +69,35 @@ public class Main {
         System.out.println(res1);
     }
 
+    private static void test_d()
+    {
+        Scanner sc = new Scanner("apply lambda r . 2 * 3.14 * r to 1");
+        Token look = sc.nextToken();
+        while( look != Token.xEos ) {
+            System.out.printf("%s -> %s\n", look.toString(), sc.lexeme);
+            look = sc.nextToken();
+        }
+    }
+
+    private static void test_e()
+    {
+        Parser parser = new Parser("(b * b) - ((4 * a) * c)");
+        Expression ex0 = parser.parse();
+        System.out.println(ex0);
+
+        parser = new Parser("apply lambda r . 2 * 3.14 * r to 7");
+        ex0 = parser.parse();
+        System.out.println(ex0);
+    }
+
     public static void main( String[] args )
     {
         //test_a();
-        test_b();
+        //test_b();
         //test_c();
+
+        //test_d();
+
+        test_e();
     }
 }
