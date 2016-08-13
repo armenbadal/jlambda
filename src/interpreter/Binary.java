@@ -24,13 +24,13 @@ public class Binary implements Expression {
         if( (reo instanceof Constant) && (rei instanceof Constant) ) {
             double valo = ((Constant)reo).value;
             double vali = ((Constant)rei).value;
-            if( operation == "+" )
+            if( operation.equals("+") )
                 return new Constant(valo + vali);
-            if( operation == "-" )
+            if( operation.equals("-") )
                 return new Constant(valo - vali);
-            if( operation == "*" )
+            if( operation.equals("*") )
                 return new Constant(valo * vali);
-            if( operation == "/" )
+            if( operation.equals("/") )
                 return new Constant(valo / vali);
         }
 

@@ -81,13 +81,23 @@ public class Main {
 
     private static void test_e()
     {
-        Parser parser = new Parser("(b * b) - ((4 * a) * c)");
+        Parser parser = new Parser("(b * b) - (4 * a * c)");
         Expression ex0 = parser.parse();
         System.out.println(ex0);
 
         parser = new Parser("apply lambda r . 2 * 3.14 * r to 7");
         ex0 = parser.parse();
         System.out.println(ex0);
+    }
+
+    private static void test_f()
+    {
+        Parser parser = new Parser("apply apply lambda y . lambda x . y + x to 5 to 8");
+        Expression ex0 = parser.parse();
+        System.out.println(ex0);
+
+        Expression ex1 = ex0.evaluate(global);
+        System.out.println(ex1);
     }
 
     public static void main( String[] args )
@@ -99,5 +109,7 @@ public class Main {
         //test_d();
 
         test_e();
+
+        //test_f();
     }
 }
