@@ -16,10 +16,17 @@ public class Parser {
 
     public Expression parse()
     {
-        return parseExpression();
+        Expression tree = null;
+        try {
+            tree = parseExpression();
+        }
+        catch( SyntaxError se ) {
+            System.err.println(se.getMessage());
+        }
+        return tree;
     }
 
-    private Expression parseExpression()
+    private Expression parseExpression() throws SyntaxError
     {
         Expression result = parsePrimary();
         while( lookahead == Token.xAdd ||
@@ -34,7 +41,7 @@ public class Parser {
         return result;
     }
 
-    private Expression parsePrimary()
+    private Expression parsePrimary() throws SyntaxError
     {
         if( lookahead == Token.xConstant ) {
             double value = Double.valueOf(scanner.lexeme);
@@ -91,9 +98,11 @@ public class Parser {
         return null;
     }
 
-    private void match( Token k )
+    private void match( Token k ) throws SyntaxError
     {
         if( lookahead == k )
             lookahead = scanner.nextToken();
+        else
+            throw new SyntaxError("Շարահյուսական սխալ։");
     }
 }
