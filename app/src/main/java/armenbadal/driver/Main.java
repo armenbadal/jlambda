@@ -1,5 +1,6 @@
 package armenbadal.driver;
 
+import armenbadal.ast.*;
 import armenbadal.interpreter.*;
 import armenbadal.parser.Parser;
 import armenbadal.parser.Scanner;

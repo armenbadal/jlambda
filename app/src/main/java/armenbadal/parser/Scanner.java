@@ -3,7 +3,6 @@ package armenbadal.parser;
 import java.util.HashMap;
 import java.util.Map;
 
-/**/
 public class Scanner {
     private Map<String,Token> keywords = null;
     private Map<String,Token> operations = null;
@@ -14,14 +13,13 @@ public class Scanner {
 
     public String lexeme = null;
 
-    public Scanner( String text )
-    {
+    public Scanner(String text) {
         keywords = new HashMap<>();
         keywords.put("if", Token.xIf);
         keywords.put("then", Token.xThen);
         keywords.put("else", Token.xElse);
         keywords.put("lambda", Token.xLambda);
-        keywords.put("apply", Token.xApplly);
+        keywords.put("apply", Token.xApply);
         keywords.put("to", Token.xTo);
 
         operations = new HashMap<>();
@@ -41,8 +39,7 @@ public class Scanner {
         pos = 1;
     }
 
-    public Token nextToken()
-    {
+    public Token nextToken() {
         // բացատանիշեր
         while( Character.isWhitespace(ch) )
             ch = source.charAt(pos++);
@@ -70,8 +67,7 @@ public class Scanner {
     }
 
     // ծառայողական բառեր և իդենտիֆիկատորներ
-    private Token scanKeyword()
-    {
+    private Token scanKeyword() {
         int begin = pos - 1;
         while( Character.isLetterOrDigit(ch) )
             ch = source.charAt(pos++);
@@ -81,14 +77,13 @@ public class Scanner {
     }
 
     // իրական թվեր
-    private Token scanNumber()
-    {
+    private Token scanNumber() {
         int begin = pos - 1;
         while( Character.isDigit(ch) )
             ch = source.charAt(pos++);
         if( ch == '.' ) {
             ch = source.charAt(pos++);
-            while (Character.isDigit(ch))
+            while(Character.isDigit(ch))
                 ch = source.charAt(pos++);
         }
         lexeme = source.substring(begin, pos - 1);

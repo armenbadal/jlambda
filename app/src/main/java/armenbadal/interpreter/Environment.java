@@ -4,20 +4,16 @@ import java.util.HashMap;
 import java.util.Set;
 
 /**/
-public class Environment extends HashMap<String,Expression> {
-
-    public void bind( String nm, Expression vl )
-    {
-        put(nm, vl);
+public class Environment extends HashMap<String, Value> {
+    public void bind(String name, Value value) {
+        put(name, value);
     }
 
-    public Expression lookup( String nm )
-    {
-        return get(nm);
+    public Value lookup(String name) {
+        return get(name);
     }
 
-    public Set<String> names()
-    {
+    public Set<String> names() {
         return keySet();
     }
 

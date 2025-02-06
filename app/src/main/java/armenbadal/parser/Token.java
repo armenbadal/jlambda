@@ -9,7 +9,7 @@ public enum Token {
     xThen,
     xElse,
     xLambda,
-    xApplly,
+    xApply,
     xTo,
     xLeftPar,
     xRightPar,
