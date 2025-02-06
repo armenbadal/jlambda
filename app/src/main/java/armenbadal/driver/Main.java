@@ -1,9 +1,9 @@
-package main;
+package armenbadal.driver;
 
-import interpreter.*;
-import parser.Parser;
-import parser.Scanner;
-import parser.Token;
+import armenbadal.interpreter.*;
+import armenbadal.parser.Parser;
+import armenbadal.parser.Scanner;
+import armenbadal.parser.Token;
 
 /**/
 public class Main {

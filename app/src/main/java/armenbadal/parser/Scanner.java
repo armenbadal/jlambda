@@ -1,4 +1,4 @@
-package parser;
+package armenbadal.parser;
 
 import java.util.HashMap;
 import java.util.Map;

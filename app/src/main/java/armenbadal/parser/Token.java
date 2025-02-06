@@ -1,4 +1,4 @@
-package parser;
+package armenbadal.parser;
 
 /**/
 public enum Token {

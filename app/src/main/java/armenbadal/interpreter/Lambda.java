@@ -1,7 +1,6 @@
-package interpreter;
+package armenbadal.interpreter;
 
 import java.util.Set;
-import java.util.StringJoiner;
 
 /**/
 public class Lambda implements Expression {

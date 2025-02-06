@@ -1,6 +1,6 @@
-package parser;
+package armenbadal.parser;
 
-import interpreter.*;
+import armenbadal.interpreter.*;
 
 /**/
 public class Parser {

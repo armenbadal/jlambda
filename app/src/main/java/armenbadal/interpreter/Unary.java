@@ -1,4 +1,4 @@
-package interpreter;
+package armenbadal.interpreter;
 
 import java.util.Set;
 

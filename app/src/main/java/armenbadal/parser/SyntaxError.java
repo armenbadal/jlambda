@@ -1,4 +1,4 @@
-package parser;
+package armenbadal.parser;
 
 /**/
 public class SyntaxError extends Throwable {
